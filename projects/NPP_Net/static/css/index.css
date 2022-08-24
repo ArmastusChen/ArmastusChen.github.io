@@ -24,13 +24,13 @@ body {
 
 .author-portrait {
   overflow: hidden;
-  width: 168px;
+  width: 228px;
   height: 128px;
   font-size: 0;
   margin: auto;
 }
 .author-portrait img {
-    border-radius: 50%;
+    border-radius: 0px;
     width: 140px;
     position: relative;
 }
@@ -222,7 +222,7 @@ body {
 
 .hyper-space {
   width: 100%;
-  padding-bottom: calc(100% - 7%);
+  padding-bottom: 100%;
   box_sizing: border-box;
   touch-action: none;
 
@@ -240,26 +240,29 @@ body {
 }
 
 .hyper-grid-wrapper{
-  width: 95%;
-  padding-bottom: 95%;
+  width: 100%;
+  padding-bottom: 52.5%;
+  padding-right: 0%;
+  padding-left: 0%;
   overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid #29e;
+  border-radius: 0%;
   position: relative;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .hyper-grid-rgb {
-  width: 100%;
   height: 100%;
   overflow: hidden;
-
+  max-width: 1965px;
+  max-height: 565px;
+  border: 2px solid #29e;
   position: absolute;
 }
 
 .hyper-grid-rgb img {
   position: relative;
-  height: 2000%;
-  width: 2000%;
-  max-width: none !important;
+  max-width: 36500px;
+  width: 100%;
+  padding-bottom: 0%;
+  display: inline-table;
 }

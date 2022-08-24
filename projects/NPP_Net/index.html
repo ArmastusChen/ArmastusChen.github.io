@@ -3,29 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="HyperNeRF handles topological variations by modeling a family of shapes in a higher-dimensional space, thereby producing more realistic renderings and more accurate geometric reconstructions.">
-  <meta name="keywords" content="HyperNeRF, Nerfies, D-NeRF, NeRF">
+        content="SunStage reconstructs geometry and lighting for a selfie video.">
+  <meta name="keywords" content="implicit funciton, near-periodic patterns, image completion, texture synthesis">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:image" content="./static/images/thumbnail.png"/>
-  <link rel="image_src" href="./static/images/thumbnail.png">
+  <meta property="og:image" content="./static/images/thumbnail2.png"/>
+  <link rel="image_src" href="./static/images/thumbnail2.png">
   <link rel="icon"
         type="image/x-icon"
         href="./static/images/favicon.ico"/>
 
-  <title>Learning Continuous Implicit Representation for Near-Periodic Patterns. </title>
+  <title>Learning Continuous Implicit Representation for Near-Periodic Patterns</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDF010G6PN"></script>
-  <script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RLCVEPCTJV"></script>
+<script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-EDF010G6PN');
-
-
-  </script>
-
+  gtag('config', 'G-RLCVEPCTJV');
+</script>
   <script type="module"
           src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
@@ -50,8 +47,12 @@
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+
 </head>
 <body>
+
+
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
@@ -88,6 +89,8 @@
 </nav>
 
 
+
+
 <section class="hero">
   <div class="hero-body">
     <div class="container">
@@ -113,7 +116,7 @@
             <a href="http://www.cs.cmu.edu/~hebert/">Martial Hebert</a></div>
           <div class="author-block">
             <div class="author-portrait">
-              <img src="./static/images/portraits/srinivas.jpeg" class="rgb preload" />
+              <img src="./static/images/portraits/srinivas.jpg" class="rgb preload" />
             </div>
             <a href="http://www.cs.cmu.edu/~srinivas/">Srinivasa G. Narasimhan</a>
           </div>
@@ -171,6 +174,15 @@
                 <span>Code</span>
                 </a>
             </span>
+             <span class="link-block">
+                <a href="./static/Bibtex.bib"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Bibtex</span>
+                </a>
+              </span>
             <!-- Dataset Link. -->
 <!--             <span class="link-block">
               <a href="https://github.com/google/hypernerf/releases/tag/v0.1"
@@ -189,50 +201,297 @@
 </section>
 
 
+<section class="hero teaser">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+              <img src="./static/images/teaser.jpg"/>
 
-
+      <h2 class="subtitle has-text-centered">
+        <i>NPP-Net</i> handles both global consistency (<i>e.g.,</i> window spatial arrangement) and local variations (<i>e.g.,</i> window appearance variations) in the NPP scene, thereby producing better completion for the regions behind the tree, lamp, and car.
+      </h2>
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-desktop">
 
-    Coming Soon!
     <!-- Abstract. -->
-<!--     <div class="columns is-centered has-text-centered">
+    <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Neural Radiance Fields (NeRF) are able to reconstruct scenes with unprecedented
-            fidelity,
-            and various recent works have extended NeRF to handle dynamic scenes. A common approach
-            to reconstruct such non-rigid scenes is through the use of a learned deformation field
-            mapping from coordinates in each input image into a canonical template coordinate space.
-            However, these deformation-based approaches struggle to model changes in topology, as
-            topological changes require a discontinuity in the deformation field, but these
-            deformation fields are necessarily continuous.
+            Near-Periodic Patterns (NPP) are ubiquitous in man-made scenes and are composed of tiled motifs with appearance differences caused by lighting, defects, or design elements. A good NPP representation is useful for many applications including image completion, segmentation, and geometric remapping. But representing NPP is challenging because it needs to maintain global consistency (tiled motifs layout) while preserving local variations (appearance differences). Methods trained on general scenes using a large dataset or single-image optimization struggle to satisfy these constraints, while methods that explicitly model periodicity are not robust to periodicity detection errors. 
           </p>
           <p>
-            We address this limitation by lifting
-            NeRFs into a higher dimensional space, and by representing the 5D radiance field
-            corresponding to each individual input image as a slice through this "hyper-space". Our
-            method is inspired by level set methods, which model the evolution of surfaces as slices
-            through a higher dimensional surface. We evaluate our method on two tasks: (i)
-            interpolating smoothly between "moments", i.e., configurations of the scene, seen in the
-            input images while maintaining visual plausibility, and (ii) novel-view synthesis at
-            fixed moments. We show that our method, which we dub HyperNeRF, outperforms existing
-            methods on both tasks. Compared to Nerfies, <i>HyperNeRF</i> reduces average error rates by
-            4.1% for interpolation and 8.6% for novel-view synthesis, as measured by LPIPS.
+            To address these challenges, we learn a neural implicit representation using a coordinate-based MLP with single image optimization. We design an input feature warping module and a periodicity-guided patch loss to handle both global consistency and local variations. To further improve the robustness, we introduce a periodicity proposal module to search and use multiple candidate periodicities in our pipeline. We demonstrate the effectiveness of our method on more than 500 images of building facades, friezes, wallpapers, ground, and Mondrian patterns on single and multi-planar scenes.
           </p>
         </div>
       </div>
-    </div> -->
+    </div>
     <!--/ Abstract. -->
+
+
+<hr/>
+
+
+  <div class="container is-max-desktop">
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">NPP-Net</h2>
+        <div class="content has-text-justified">
+      <p>
+     NPP-Net consists of four modules: 
+    (1) <i> Periodicity Proposal  </i> (green) proposes multiple candidate peroidicities for the input NPP scene. 
+    (2) <i> Periodicity-Aware Input Warping </i> (pink) warps input coordinates using detected periodicity. 
+    (3) <i> Coordinate-based MLP </i> (blue) maps warped and input coordinate features to an RGB value. 
+    (4) <i> Single Image Optimization </i> (yellow) uses pixel loss and periodicity-guided patch loss on a single NPP image. 
+      </p>
+      <div class="has-text-centered">
+        <img style="width: 90%;" src="./static/images/NPP-Net.jpg"
+             alt="NPP-Net architecture."/>
+      </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<hr/>
+
+
+<section class="section">
+
+
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+    <div class="columns is-centered is-mobile">
+      <div class="column is-full-mobile is-four-fifths-tablet is-four-fifths-desktop has-text-centered is-narrow" style="max-height:365px">
+      <h1 class="title is-3">
+         Application 1: NPP Completion
+    </h2>
+
+
+
+</div>
+</div>
+	
+<div class="notification is-info is-light">
+
+
+
+      <div class="content has-text-centered">
+      <h4 class="title is-4">
+         Single-Planar NPP Completion
+      </h4>
+    </div>
+      <div class="has-text-centered">
+        <img style="width: 90%;" src="./static/images/single_plane.jpg"
+             alt="NPP-Net architecture."/>
+      </div>
+
+
+<hr/>
+
+
+      <div class="content has-text-centered">
+      <h4 class="title is-4">
+         Different Size of the Unknown Mask.
+      </h4>
+    </div>
+
+
+      <div class="column is-mobile is-desktop is-full-tablet has-text-centered is-narrow" style="max-height:565px">
+        <div class="hyper-grid-wrapper">
+          <div class="hyper-grid-rgb">
+            <img id="rerender_grid1" style="width:2400%;" src="./static/images/demo.jpg"/>
+          </div>
+        </div>
+      </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+     <p style="font-size: medium">Move the slider to adjust the mask size.</p>
+       
+       <div class="columns is-centered is-vcentered is-mobile">
+     <div class="column is-narrow is-1" style="padding: 0rem">
+             <img width="500%" src="static/icons/render_1.png"/>
+     </div>
+     <div class="column is-10">
+       
+       <input class="slider is-fullwidth is-large is-warning is-circle"
+                   id="rerender-slider"
+                   step="1" min="0" max="23" value="0" type="range">
+       </div>
+
+       <div class="column is-narrow is-1" style="padding: 0rem">
+              <img width="500%" src="static/icons/render_2.png"/>
+      </div>
+       </div>
+  </div>
+  </div>
+
+
+ <hr/>
+
+
+    <div class="content has-text-centered">
+      <h4 class="title is-4">
+         Multi-Planar NPP Completion
+      </h4>
+    </div>
+ 
+
+      <div class="column is-mobile is-centered is-three-fifths-desktop is-three-fifths-tablet has-text-centered is-narrow" style="max-height:765px;margin: auto">
+        <div class="hyper-grid-wrapper" style="padding-bottom:91%">
+          <div class="hyper-grid-rgb" style="max-height:729px">
+            <img id="shiny_grid1" style="width:500%;" src="./static/images/multi_plane1.jpg"/>
+          </div>
+        </div>
+      </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+     <p style="font-size: medium;"> Move the slider to show results of different models.</p>
+       
+       <div class="columns is-centered is-vcentered is-mobile">
+     <div class="column is-narrow is-1" style="padding: 0rem">
+             <img width="500%" src="static/icons/render_1.png"/>
+     </div>
+     <div class="column is-10">
+       
+       <input class="slider is-fullwidth is-large is-warning is-circle"
+                   id="shiny-slider"
+                   step="1" min="0" max="4" value="0" type="range">
+       </div>
+
+       <div class="column is-narrow is-1" style="padding: 0rem">
+              <img width="500%" src="static/icons/render_2.png"/>
+      </div>
+       </div>
+  </div>
+  </div>
+
+
+
+
+
+      <div class="column is-mobile is-centered is-three-fifths-desktop is-three-fifths-tablet has-text-centered is-narrow" style="max-height:765px;margin: auto">
+        <div class="hyper-grid-wrapper" style="padding-bottom:110%">
+          <div class="hyper-grid-rgb" style="max-height:600px">
+            <img id="soften_grid1" style="width:500%;" src="./static/images/multi_plane2.jpg"/>
+          </div>
+        </div>
+      </div>
+
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+     <p style="font-size: medium;">Move the slider to show results of different models.</p>
+       
+       <div class="columns is-centered is-vcentered is-mobile">
+     <div class="column is-narrow is-1" style="padding: 0rem">
+             <img width="500%" src="static/icons/render_1.png"/>
+     </div>
+     <div class="column is-10">
+       
+       <input class="slider is-fullwidth is-large is-warning is-circle"
+                   id="soften-slider"
+                   step="1" min="0" max="4" value="0" type="range">
+       </div>
+
+       <div class="column is-narrow is-1" style="padding: 0rem">
+              <img width="500%" src="static/icons/render_2.png"/>
+      </div>
+       </div>
+  </div>
+  </div>
+</div>
+
+
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+    <div class="columns is-centered is-mobile">
+      <div class="column is-full-mobile is-four-fifths-tablet is-four-fifths-desktop has-text-centered is-narrow" style="max-height:365px">
+      <h1 class="title is-3">
+         Application 2: NPP segmentation
+    </h2>
+
+</div>
+</div>
+    
+<div class="notification is-link is-light">
+
+
+
+      <div class="content has-text-centered">
+      <h4 class="title is-4">
+         Segment Non-Periodic Regions.
+      </h4>
+    </div>
+      <div class="has-text-centered">
+        <img style="width: 90%;" src="./static/images/segmentation.jpg"
+             alt="NPP-Net architecture."/>
+      </div>
+</div>
+
+
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+    <div class="columns is-centered is-mobile">
+      <div class="column is-full-mobile is-four-fifths-tablet is-four-fifths-desktop has-text-centered is-narrow" style="max-height:365px">
+      <h1 class="title is-3">
+         Application 3: NPP Remapping
+    </h2>
+
+</div>
+</div>
+    
+    
+<div class="notification is-link is-light">
+
+      <div class="content has-text-centered">
+      <h4 class="title is-4">
+         Reconstruct Blurry Regions Caused by Remapping Errors.
+      </h4>
+    </div>
+      <div class="has-text-centered">
+        <img style="width: 90%;" src="./static/images/remapping.jpg"
+             alt="NPP-Net architecture."/>
+      </div>
+</div>
+
 
 
 </section>
 
 <hr/>
 
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container content is-max-desktop">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{chen2022learning,
+  author = {Bowei Chen and Tiancheng Zhi and Martial Hebert and Srinivasa G Narasimhan},
+  title = {Learning Continuous Implicit Representation for Near-Periodic Patterns},
+  booktitle = {European Conference on Computer Vision},
+  year={2022}
+}
+</code></pre>
+  </div>
+</section>
+
+<section class="section" id="acknowledgements">
+  <div class="container content is-max-desktop">
+    <h2 class="title">Acknowledgements</h2>
+    <p> This work was supported by a gift from Zillow Group, USA, and NSF Grants #CNS-2038612, #IIS-1900821.
+        Special thanks to <a href="http://www.singbingkang.com/">Sing Bing Kang</a> and <a href="https://www.cs.cornell.edu/~iboy/">Ivaylo Boyadzhiev</a> for their constructive feedback; This website template was borrowed from <a href="https://grail.cs.washington.edu/projects/sunstage/">SunStage</a>. Thanks <a href="https://homes.cs.washington.edu/~yifan1/">Yifan</a>!
+  </div>
+</section>
 
 <script type="text/javascript" src="./static/slick/slick.min.js"></script>
 </body>
